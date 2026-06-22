@@ -69,3 +69,30 @@ export const updateBookStatus = async ( id, status ) => {
 
   return res.json();
 };
+
+
+
+export const getPendingBooks = async()=>{
+ const res = await fetch(`${API}/books/pending`,
+    {
+     cache:"no-store"
+    }
+ );
+
+ const data = await res.json()
+
+ return data;
+};
+
+
+export const approveBook = async(id)=>{
+ const res = await fetch(`${API}/books/approve/${id}`,
+    {
+    method:"PATCH"
+    }
+ );
+
+ const data = await res.json()
+
+ return data;
+};
