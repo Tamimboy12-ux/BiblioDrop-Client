@@ -19,6 +19,27 @@ export const getMyBooks = async (email) => {
   return res.json();
 };
 
+
+export const getBookById = async (id) => {
+  const res = await fetch(
+    `${API}/books/${id}`
+  );
+
+  return res.json();
+};
+
+
+export const getPublishedBooks = async () => {
+    const res = await fetch(`${API}/published-books`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    return res.json();
+  };
+
+
 export const deleteBook = async (id) => {
   const res = await fetch(`${API}/books/${id}`,
     {
@@ -29,14 +50,6 @@ export const deleteBook = async (id) => {
   return res.json();
 };
 
-
-export const getBookById = async (id) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/books/${id}`
-  );
-
-  return res.json();
-};
 
 export const updateBook = async ( id, bookData) => {
   const res = await fetch(
