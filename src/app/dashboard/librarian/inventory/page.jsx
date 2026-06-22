@@ -61,7 +61,6 @@ const InventoryPage = () => {
   return (
     <div className="space-y-8">
 
-      {/* Header */}
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
@@ -98,7 +97,6 @@ const InventoryPage = () => {
 
       </div>
 
-      {/* Loading */}
 
       {loading && (
         <div className="bg-white rounded-3xl border p-10 text-center">
@@ -106,7 +104,6 @@ const InventoryPage = () => {
         </div>
       )}
 
-      {/* Empty */}
 
       {!loading && books.length === 0 && (
         <div
@@ -128,7 +125,6 @@ const InventoryPage = () => {
         </div>
       )}
 
-      {/* Table */}
 
       {!loading && books.length > 0 && (
         <div
