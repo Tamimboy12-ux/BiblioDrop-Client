@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { signIn } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -31,9 +32,11 @@ const LoginPage = () => {
 
       if (result?.error) {
         setError(result.error.message);
+        toast.error("Logged In Failed")
         return;
       }
 
+      toast.success("Logged In Successful")
       router.push("/");
       router.refresh();
     } catch (error) {

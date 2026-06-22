@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import {  Bars,  Xmark,  Book,  ChevronDown} from "@gravity-ui/icons";
 
 import { useSession, signOut}from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 
 const Navbar = () => {
@@ -44,6 +45,12 @@ const Navbar = () => {
       href:"/dashboard/admin"
     }
   ];
+
+
+  const handleSignOut = async () => {
+    await signOut()
+    toast.success("You successfully LogOut")
+  }
 
 
 
@@ -138,7 +145,7 @@ const Navbar = () => {
               />
 
               <button
-                onClick={()=>signOut()}
+                onClick={handleSignOut}
                 className=" bg-red-500 text-white px-5 py-2 rounded-xl "
               >
                 Logout

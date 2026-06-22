@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { signUp, signIn } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -58,7 +59,9 @@ const RegisterPage = () => {
       setError("Registration failed");
     } finally {
       setLoading(false);
+      toast.success("Logged In Successful")
     }
+
   };
 
   const handleGoogleLogin = async () => {
