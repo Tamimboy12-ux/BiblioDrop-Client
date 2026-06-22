@@ -49,76 +49,32 @@ const AdminUsersPage = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1
-          className="
-          text-4xl
-          font-bold
-          text-slate-800
-          "
-        >
-          Manage Users
+        <h1 className="text-4xl font-bold text-slate-800">
+            Manage Users
         </h1>
-
-        <p
-          className="
-          text-gray-500
-          mt-2
-          "
-        >
-          Manage all users,
-          librarians and admins.
+        <p className=" text-gray-500 mt-2 ">
+            Manage all users,
+            librarians and admins.
         </p>
       </div>
 
-      <div
-        className="
-        bg-white
-        rounded-3xl
-        border
-        shadow-sm
-        overflow-hidden
-        "
-      >
-
-        <table
-          className="w-full"
-        >
-          <thead
-            className="
-            bg-slate-100
-            "
-          >
+      <div className=" bg-white rounded-3xl border shadow-sm overflow-hidden ">
+        <table className="w-full">
+          <thead className=" bg-slate-100">
             <tr>
-              <th
-                className="
-                p-5
-                text-left
-                "
-              >
+              <th className="p-5 text-left">
                 User
               </th>
 
-              <th
-                className="
-                p-5
-                "
-              >
+              <th className=" p-5 ">
                 Email
               </th>
 
-              <th
-                className="
-                p-5
-                "
-              >
+              <th className=" p-5 ">
                 Role
               </th>
 
-              <th
-                className="
-                p-5
-                "
-              >
+              <th className=" p-5 ">
                 Actions
               </th>
             </tr>
@@ -130,79 +86,37 @@ const AdminUsersPage = () => {
                 (user) => (
                   <tr
                     key={user._id}
-                    className="
-                    border-t
-                    "
+                    className="border-t"
                   >
-                    <td
-                      className="
-                      p-5
-                      "
-                    >
-                      <div
-                        className="
-                        flex
-                        items-center
-                        gap-3
-                        "
-                      >
+                    <td className="p-5">
+                      <div className=" flex items-center gap-3 ">
                         <Avatar>
                           <Avatar.Image alt={user?.name} src={user?.image} />
                           <Avatar.Fallback>JD</Avatar.Fallback>
                         </Avatar>
 
                         <div>
-
-                          <h3
-                            className="
-                            font-semibold
-                            "
-                          >
+                          <h3 className=" font-semibold ">
                             {user.name}
                           </h3>
                         </div>
                       </div>
                     </td>
 
-                    <td
-                      className="
-                      text-center
-                      "
-                    >
+                    <td className=" text-center ">
                       {user.email}
                     </td>
 
-                    <td
-                      className="
-                      text-center
-                      "
-                    >
-                      <span
-                        className="
-                        px-3
-                        py-1
-                        rounded-full
-                        bg-indigo-100
-                        text-indigo-700
-                        text-sm
-                        "
-                      >
+                    <td className=" text-center ">
+                      <span className=" px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-sm ">
                         {user.role}
                       </span>
-
                     </td>
 
                     <td>
-                      <div
-                        className="
-                        flex
-                        justify-center
-                        gap-2
-                        "
-                      >
+                      <div className=" flex justify-center gap-2 ">
 
                         <button
-
                           onClick={() =>
                             handleRoleChange(
                               user._id,
@@ -210,13 +124,7 @@ const AdminUsersPage = () => {
                             )
                           }
 
-                          className="
-                          px-3
-                          py-2
-                          rounded-xl
-                          bg-purple-600
-                          text-white
-                          "
+                          className=" px-3 py-2 rounded-xl bg-purple-600 text-white "
                         >
                           Make Admin
                         </button>
@@ -228,13 +136,7 @@ const AdminUsersPage = () => {
                               "librarian"
                             )
                           }
-                          className="
-                          px-3
-                          py-2
-                          rounded-xl
-                          bg-blue-600
-                          text-white
-                          "
+                          className=" px-3 py-2 rounded-xl bg-blue-600 text-white "
                         >
                           Librarian
                         </button>
@@ -245,13 +147,7 @@ const AdminUsersPage = () => {
                               user._id
                             )
                           }
-                          className="
-                          px-3
-                          py-2
-                          rounded-xl
-                          bg-red-500
-                          text-white
-                          "
+                          className=" px-3 py-2 rounded-xl bg-red-500 text-white "
                         >
                           Delete
                         </button>
@@ -261,13 +157,9 @@ const AdminUsersPage = () => {
                 )
               )
             }
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 };

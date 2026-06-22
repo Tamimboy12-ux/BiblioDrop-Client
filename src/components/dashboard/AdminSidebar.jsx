@@ -20,13 +20,6 @@ const AdminSidebar = () => {
         </Link>
 
         <Link
-          href="/dashboard/admin/approvals"
-          className="block p-3 rounded-xl hover:bg-indigo-50"
-        >
-          Book Approval Queue
-        </Link>
-
-        <Link
           href="/dashboard/admin/users"
           className="block p-3 rounded-xl hover:bg-indigo-50"
         >
@@ -37,7 +30,7 @@ const AdminSidebar = () => {
           href="/dashboard/admin/books"
           className="block p-3 rounded-xl hover:bg-indigo-50"
         >
-          Manage Books
+          Book Approval Queue
         </Link>
 
         <Link
