@@ -2,7 +2,7 @@ import AdminSidebar from "@/components/dashboard/AdminSidebar";
 
 const layout = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex mt-20">
 
       <AdminSidebar />
 

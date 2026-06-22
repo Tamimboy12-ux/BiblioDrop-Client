@@ -2,7 +2,7 @@ import UserSidebar from "@/components/dashboard/UserSidebar";
 
 const layout = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex mt-20">
 
       <UserSidebar />
 
