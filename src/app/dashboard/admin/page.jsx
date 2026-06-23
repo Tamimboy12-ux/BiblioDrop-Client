@@ -2,140 +2,132 @@
 
 import { useEffect, useState,}from "react";
 
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer,}from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer,}from "recharts";
 
-import { getAdminStats,}from "@/services/adminApi";
-import { Spinner } from "@heroui/react";
+import { getAdminStats, getBooksByCategory,}from "@/services/adminApi";
 
 const AdminDashboard = () => {
 
-  const [stats, setStats] = useState(null);
+    const [stats, setStats] = useState({});
 
-  useEffect(() => {
-    const loadStats = async () => {
-        const data = await getAdminStats();
-        setStats(data);
-      };
+    const [chartData, setChartData] = useState([]);
 
-    loadStats();
-  }, []);
+    useEffect(() => {
+      const loadData = async () => {
 
-  if (!stats) {
+          const statsData = await getAdminStats();
+          const chart = await getBooksByCategory();
+
+          setStats(statsData);
+
+          setChartData(chart);
+        };
+
+      loadData();
+    }, []);
+
     return (
-      <div className="flex flex-col items-center gap-2">
-        <Spinner color="success" />
-        <span className="text-xs text-muted">Success</span>
+      <div className="space-y-8">
+        <h1
+          className="
+          text-4xl
+          font-bold
+          "
+        >
+          Admin Overview
+        </h1>
+
+        <div
+          className="
+          grid
+          md:grid-cols-4
+          gap-6
+          "
+        >
+
+          <div className="bg-white border rounded-3xl p-6">
+            <h3>Total Users</h3>
+            <p className="text-4xl font-bold mt-2">
+              {stats.totalUsers || 0}
+            </p>
+          </div>
+
+          <div className="bg-white border rounded-3xl p-6">
+            <h3>Total Books</h3>
+            <p className="text-4xl font-bold mt-2">
+              {stats.totalBooks || 0}
+            </p>
+          </div>
+
+          <div className="bg-white border rounded-3xl p-6">
+            <h3>Total Deliveries</h3>
+            <p className="text-4xl font-bold mt-2">
+              {stats.totalDeliveries || 0}
+            </p>
+          </div>
+
+          <div className="bg-white border rounded-3xl p-6">
+            <h3>Total Revenue</h3>
+            <p className="text-4xl font-bold mt-2">
+              $
+              {stats.totalRevenue || 0}
+            </p>
+          </div>
+
+        </div>
+
+        <div
+          className="
+          bg-white
+          border
+          rounded-3xl
+          p-8
+          "
+        >
+
+          <h2
+            className="
+            text-2xl
+            font-bold
+            mb-5
+            "
+          >
+            Books By Category
+          </h2>
+
+          <div
+            className="
+            h-100
+            "
+          >
+
+            <ResponsiveContainer
+              width="100%"
+              height={400}
+            >
+
+              <PieChart>
+
+                <Pie
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="_id"
+                  outerRadius={150}
+                  label
+                />
+
+                <Tooltip />
+
+              </PieChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
+        </div>
+
       </div>
     );
-  }
-
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className=" text-4xl font-bold">
-          Admin Dashboard
-        </h1>
-        <p className=" text-gray-500 mt-2 ">
-          Platform overview
-        </p>
-
-      </div>
-
-      <div className=" grid md:grid-cols-4 gap-6 ">
-
-        <div className=" bg-white p-6 rounded-3xl border ">
-          <p className="text-gray-500">
-            Total Users
-          </p>
-
-          <h2 className=" text-3xl font-bold mt-2 ">
-            {stats.totalUsers}
-          </h2>
-        </div>
-
-        <div className=" bg-white p-6 rounded-3xl border ">
-          <p className="text-gray-500">
-            Total Books
-          </p>
-
-          <h2 className=" text-3xl font-bold mt-2 ">
-            {stats.totalBooks}
-          </h2>
-        </div>
-
-        <div className=" bg-white p-6 rounded-3xl border ">
-          <p className="text-gray-500">
-            Deliveries
-          </p>
-
-          <h2 className=" text-3xl font-bold mt-2 ">
-            {stats.totalDeliveries}
-          </h2>
-        </div>
-
-        <div className=" bg-white p-6 rounded-3xl border ">
-          <p className="text-gray-500">
-            Revenue
-          </p>
-
-          <h2 className=" text-3xl font-bold mt-2 ">
-            ${stats.totalRevenue}
-          </h2>
-        </div>
-
-      </div>
-
-      <div className=" bg-white rounded-3xl border p-6 ">
-
-        <h2 className=" text-2xl font-bold mb-6 ">
-          Books By Category
-        </h2>
-
-        <div className=" h-100 ">
-
-          <ResponsiveContainer
-            width="100%"
-            height={400}
-          >
-            <PieChart>
-
-              <Pie
-                data={
-                  stats.categoryData
-                }
-                dataKey="value"
-                nameKey="name"
-                outerRadius={140}
-                label
-              >
-
-                {
-                  stats.categoryData.map(
-                    (
-                      entry,
-                      index
-                    ) => (
-                      <Cell
-                        key={index}
-                      />
-                    )
-                  )
-                }
-
-              </Pie>
-
-              <Tooltip />
-
-            </PieChart>
-
-          </ResponsiveContainer>
-
-        </div>
-
-      </div>
-
-    </div>
-  );
 };
 
 export default AdminDashboard;
