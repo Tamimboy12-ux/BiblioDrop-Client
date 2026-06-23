@@ -20,7 +20,7 @@ const UserSidebar = () => {
         </Link>
 
         <Link
-          href="/dashboard/user/delivery-history"
+          href="/dashboard/user/deliveries"
           className="block p-3 rounded-xl hover:bg-indigo-50"
         >
           Delivery History
