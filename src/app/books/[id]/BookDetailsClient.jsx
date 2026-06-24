@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 
+
 import Link from "next/link";
 
 import {
@@ -16,9 +17,7 @@ import {
   getBookReviews,
 } from "@/services/reviewApi";
 
-import {
-  useSession,
-} from "@/lib/auth-client";
+import { useSession,}from "@/lib/auth-client";
 import ReviewModal from "@/components/modal/ReviewModal";
 import Image from "next/image";
 
@@ -182,7 +181,10 @@ const BookDetailsClient = ({
             mt-8
             "
           >
-            <Link
+           
+           {
+             session?.user ? 
+              <Link
               href={`/books/${book._id}/checkout`}
               className="
               bg-indigo-600
@@ -191,9 +193,23 @@ const BookDetailsClient = ({
               py-3
               rounded-xl
               "
+              >
+                Proceed To Payment
+              </Link>
+            : 
+              <Link
+              href={`/login`}
+              className="
+              bg-indigo-600
+              text-white
+              px-6
+              py-3
+              rounded-xl
+              "
             >
-              Proceed To Payment
+              Login To Proceed Payment
             </Link>
+           }
 
             <button
               onClick={() =>

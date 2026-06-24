@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import {
   getPublishedBooks,
 } from "@/services/booksApi";
+import Image from "next/image";
 
 const BooksPage = () => {
 
@@ -55,15 +56,12 @@ const BooksPage = () => {
             shadow-sm
             "
           >
-
-            <img
+            
+            <Image 
               src={book.image}
               alt={book.title}
-              className="
-              h-64
-              w-full
-              object-cover
-              "
+              width={600}
+              height={400}
             />
 
             <div className="p-5">

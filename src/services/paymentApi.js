@@ -24,6 +24,7 @@ export const saveTransaction = async (data) => {
     const res = await fetch(`${API}/transactions`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "content-type":
               "application/json",

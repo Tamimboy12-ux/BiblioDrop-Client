@@ -3,6 +3,7 @@ const API = process.env.NEXT_PUBLIC_API_URL;
 export const addBook = async (bookData) => {
   const res = await fetch(`${API}/books`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "content-type": "application/json",
     },
@@ -14,7 +15,9 @@ export const addBook = async (bookData) => {
 
 
 export const getMyBooks = async (email) => {
-  const res = await fetch(`${API}/books/librarian/${email}`);
+  const res = await fetch(`${API}/books/librarian/${email}`,{
+    credentials: "include",
+  });
 
   return res.json();
 };
@@ -44,6 +47,7 @@ export const deleteBook = async (id) => {
   const res = await fetch(`${API}/books/${id}`,
     {
       method: "DELETE",
+      credentials: "include",
     }
   );
 
@@ -56,6 +60,7 @@ export const updateBook = async ( id, bookData) => {
     `${API}/books/${id}`,
     {
       method: "PATCH",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
       },
@@ -71,6 +76,7 @@ export const updateBookStatus = async ( id, status ) => {
   const res = await fetch(`${API}/books/status/${id}`,
     {
       method: "PATCH",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
       },
@@ -88,6 +94,7 @@ export const updateBookStatus = async ( id, status ) => {
 export const getPendingBooks = async()=>{
  const res = await fetch(`${API}/books/pending`,
     {
+     credentials: "include", 
      cache:"no-store"
     }
  );
@@ -101,7 +108,8 @@ export const getPendingBooks = async()=>{
 export const approveBook = async(id)=>{
  const res = await fetch(`${API}/books/approve/${id}`,
     {
-    method:"PATCH"
+    method:"PATCH",
+    credentials: "include",
     }
  );
 

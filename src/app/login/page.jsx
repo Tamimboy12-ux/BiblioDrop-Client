@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { Button } from "@heroui/react";
+import { FaGoogle } from "react-icons/fa";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -31,14 +33,30 @@ const LoginPage = () => {
       });
 
       if (result?.error) {
-        setError(result.error.message);
-        toast.error("Logged In Failed")
-        return;
-      }
+setError(result.error.message);
+toast.error("Logged In Failed");
+return;
+}
 
-      toast.success("Logged In Successful")
-      router.push("/");
-      router.refresh();
+await fetch(
+`${process.env.NEXT_PUBLIC_API_URL}/jwt`,
+{
+method: "POST",
+headers: {
+"content-type": "application/json",
+},
+credentials: "include",
+body: JSON.stringify({
+email,
+}),
+}
+);
+
+toast.success("Logged In Successful");
+
+router.push("/");
+router.refresh();
+
     } catch (error) {
       setError("Login failed");
     } finally {
@@ -93,13 +111,13 @@ const LoginPage = () => {
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold transition"
+            className="w-full rounded-xl"
           >
             {loading ? "Signing In..." : "Login"}
-          </button>
+          </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
@@ -112,12 +130,14 @@ const LoginPage = () => {
           <div className="h-px bg-gray-200 flex-1"></div>
         </div>
 
-        <button
+        <Button
+          variant="outline"
           onClick={handleGoogleLogin}
-          className="w-full border border-gray-300 py-3 rounded-xl hover:bg-gray-50 transition"
+          className="w-full rounded-xl"
         >
+          <FaGoogle />
           Continue with Google
-        </button>
+        </Button>
 
         <div className="mt-6 text-center text-gray-500">
           Do not have an account?{" "}

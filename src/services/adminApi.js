@@ -4,8 +4,8 @@ export const getAdminStats = async () => {
 
     const res = await fetch(`${API}/admin/stats`,
         {
-          cache:
-            "no-store",
+          credentials: "include",
+          cache: "no-store",
         }
       );
 
@@ -17,8 +17,8 @@ export const getBooksByCategory = async () => {
 
     const res = await fetch(`${API}/admin/books-by-category`,
         {
-          cache:
-            "no-store",
+          credentials: "include",
+          cache: "no-store",
         }
       );
 
@@ -31,8 +31,8 @@ export const getTransactions = async () => {
 
     const res = await fetch(`${API}/transactions`,
         {
-          cache:
-            "no-store",
+          credentials: "include",
+          cache: "no-store",
         }
       );
 

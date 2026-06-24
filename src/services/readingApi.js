@@ -1,7 +1,9 @@
 const API = process.env.NEXT_PUBLIC_API_URL;
 
 export const getReadingList = async (email) => {
-    const res = await fetch(`${API}/reading-list/${email}`);
+    const res = await fetch(`${API}/reading-list/${email}`,{
+      credentials: "include",
+    });
 
     return res.json();
   };

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { signUp, signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
+import { Button } from "@heroui/react";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -149,13 +151,13 @@ const RegisterPage = () => {
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium"
+            className="w-full rounded-xl"
           >
             {loading ? "Creating Account..." : "Register"}
-          </button>
+          </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
@@ -166,12 +168,14 @@ const RegisterPage = () => {
           <div className="h-px flex-1 bg-gray-200" />
         </div>
 
-        <button
+        <Button
+          variant="outline"
           onClick={handleGoogleLogin}
-          className="w-full border py-3 rounded-xl hover:bg-gray-50"
+          className="w-full rounded-xl"
         >
+          <FaGoogle />
           Continue with Google
-        </button>
+        </Button>
 
         <p className="text-center mt-6 text-gray-500">
           Already have an account?{" "}
