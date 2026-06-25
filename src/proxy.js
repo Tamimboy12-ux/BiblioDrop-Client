@@ -2,39 +2,30 @@ import { NextResponse } from "next/server";
 
 export function proxy(request) {
 
-const sessionToken =
-request.cookies.get(
-"better-auth.session_token"
-)?.value ||
-request.cookies.get(
-"better-auth.session-token"
-)?.value;
+  const sessionToken =
+    request.cookies.get("better-auth.session_token")?.value ||
+    request.cookies.get("better-auth.session-token")?.value;
 
-const { pathname } =
-request.nextUrl;
+  const jwtToken =
+    request.cookies.get("token")?.value;
 
-const isDashboardRoute =
-pathname.startsWith(
-"/dashboard"
-);
+  const { pathname } = request.nextUrl;
 
-if (
-isDashboardRoute &&
-!sessionToken
-) {
-return NextResponse.redirect(
-new URL(
-"/login",
-request.url
-)
-);
-}
+  if (
+    pathname.startsWith("/dashboard") &&
+    !sessionToken &&
+    !jwtToken
+  ) {
+    return NextResponse.redirect(
+      new URL("/login", request.url)
+    );
+  }
 
-return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-matcher: [
-"/dashboard/:path*",
-],
+  matcher: [
+    "/dashboard/:path*",
+  ],
 };
