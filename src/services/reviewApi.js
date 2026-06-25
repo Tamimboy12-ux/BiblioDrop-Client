@@ -20,6 +20,19 @@ export const addReview = async (reviewData) => {
   };
 
 
+  export const canReviewBook = async ( email, bookId ) => {
+    const res = await fetch(
+        `${API}/reviews/can-review?email=${email}&bookId=${bookId}`,
+        {
+          credentials: "include",
+        }
+    );
+    
+    return res.json();
+  };
+
+
+
 
 export const getBookReviews = async (bookId) => { 
   const res = await fetch(`${API}/reviews/book/${bookId}`,

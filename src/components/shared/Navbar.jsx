@@ -49,6 +49,15 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut()
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+
     toast.success("You successfully LogOut")
   }
 

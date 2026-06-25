@@ -32,15 +32,30 @@ export const getBookById = async (id) => {
 };
 
 
-export const getPublishedBooks = async () => {
-    const res = await fetch(`${API}/published-books`,
-      {
-        cache: "no-store",
-      }
-    );
+export const getPublishedBooks = async ({ page = 1, search = "", category = "", minFee = "", maxFee = "", }) => {
+
+  const res = await fetch(
+    `${API}/published-books?page=${page}&limit=6&search=${search}&category=${category}&minFee=${minFee}&maxFee=${maxFee}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
+};
+
+
+export const getFeaturedBooks = async () => {
+
+    const res = await fetch(`${API}/featured-books`,
+        {
+          cache: "no-store",
+        }
+      );
 
     return res.json();
   };
+
 
 
 export const deleteBook = async (id) => {

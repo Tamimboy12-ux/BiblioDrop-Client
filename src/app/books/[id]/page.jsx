@@ -12,7 +12,11 @@ const BookDetailsPage = async ({ params }) => {
     const book = await res.json();
 
     return (
-      <BookDetailsClient  book={book}/>
+
+      <div className="mt-20">
+        <BookDetailsClient  book={book}/>
+      </div>
+      
     );
 };
 
