@@ -2,46 +2,55 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
 import { useSession } from "@/lib/auth-client";
+
 import LibrarianSidebar from "@/components/dashboard/LibrarianSidebar";
 
-
 const Layout = ({ children }) => {
+  const router = useRouter();
 
-const router = useRouter();
+  const {
+    data: session,
+    isPending,
+  } = useSession();
 
-const { data: session } =
-useSession();
+  useEffect(() => {
+    if (!isPending) {
+      if (!session) {
+        router.replace("/login");
+        return;
+      }
 
-useEffect(() => {
+      if (session.user.role !== "librarian") {
+        router.replace("/");
+      }
+    }
+  }, [session, isPending, router]);
 
-if (
-  session &&
-  session?.user?.role !== "librarian"
-) {
-  router.push("/");
-}
+  if (isPending) {
+    return (
+      <div className="p-10">
+        Loading...
+      </div>
+    );
+  }
 
-}, [session, router]);
+  if (
+    !session ||
+    session.user.role !== "librarian"
+  ) {
+    return null;
+  }
 
-if (!session) {
-return ( <div className="p-10">
-Loading... </div>
-);
-}
+  return (
+    <div className="flex mt-20">
+      <LibrarianSidebar />
 
-return ( <div className="flex mt-20">
-
-  <LibrarianSidebar></LibrarianSidebar>
-
-  <main className="flex-1 p-8">
-    {children}
-  </main>
-
-</div>
-
-);
+      <main className="flex-1 p-8">
+        {children}
+      </main>
+    </div>
+  );
 };
 
 export default Layout;

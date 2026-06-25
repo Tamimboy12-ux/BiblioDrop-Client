@@ -6,39 +6,58 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import UserSidebar from "@/components/dashboard/UserSidebar";
 
-
 const Layout = ({ children }) => {
 
-const router = useRouter();
+  const router = useRouter();
 
-const { data: session } = useSession();
+  const {
+    data: session,
+    isPending,
+  } = useSession();
 
+  useEffect(() => {
 
-useEffect(() => {
+    if (!isPending) {
 
-if ( session && session?.user?.role !== "user"){
-  router.push("/");
-}
+      if (!session) {
+        router.replace("/login");
+        return;
+      }
 
-}, [session, router]);
+      if (session.user.role !== "user") {
+        router.replace("/");
+      }
 
-if (!session) {
-return ( <div className="p-10">
-Loading... </div>
-);
-}
+    }
 
-return ( <div className="flex mt-20">
+  }, [session, isPending, router]);
 
-  <UserSidebar/>
+  if (isPending) {
+    return (
+      <div className="p-10">
+        Loading...
+      </div>
+    );
+  }
 
-  <main className="flex-1 p-8">
-    {children}
-  </main>
+  if (
+    !session ||
+    session.user.role !== "user"
+  ) {
+    return null;
+  }
 
-</div>
+  return (
+    <div className="flex mt-20">
 
-);
+      <UserSidebar />
+
+      <main className="flex-1 p-8">
+        {children}
+      </main>
+
+    </div>
+  );
 };
 
 export default Layout;

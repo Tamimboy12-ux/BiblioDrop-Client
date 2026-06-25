@@ -2,46 +2,52 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
 import { useSession } from "@/lib/auth-client";
 
 import AdminSidebar from "@/components/dashboard/AdminSidebar";
 
 const Layout = ({ children }) => {
+  const router = useRouter();
 
-const router = useRouter();
+  const {
+    data: session,
+    isPending,
+  } = useSession();
 
-const { data: session } =
-useSession();
+  useEffect(() => {
+    if (!isPending) {
+      if (!session) {
+        router.replace("/login");
+        return;
+      }
 
-useEffect(() => {
+      if (session.user.role !== "admin") {
+        router.replace("/");
+      }
+    }
+  }, [session, isPending, router]);
 
-if (
-  session &&
-  session?.user?.role !== "admin"
-) {
-  router.push("/");
-}
+  if (isPending) {
+    return (
+      <div className="p-10">
+        Loading...
+      </div>
+    );
+  }
 
-}, [session, router]);
+  if (!session || session.user.role !== "admin") {
+    return null;
+  }
 
-if (!session) {
-return ( <div className="p-10">
-Loading... </div>
-);
-}
+  return (
+    <div className="flex mt-20">
+      <AdminSidebar />
 
-return ( <div className="flex mt-20">
-
-  <AdminSidebar />
-
-  <main className="flex-1 p-8">
-    {children}
-  </main>
-
-</div>
-
-);
+      <main className="flex-1 p-8">
+        {children}
+      </main>
+    </div>
+  );
 };
 
 export default Layout;
