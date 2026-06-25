@@ -33,24 +33,24 @@ const LoginPage = () => {
       });
 
       if (result?.error) {
-setError(result.error.message);
-toast.error("Logged In Failed");
-return;
-}
-
-await fetch(
-`${process.env.NEXT_PUBLIC_API_URL}/jwt`,
-{
-method: "POST",
-headers: {
-"content-type": "application/json",
-},
-credentials: "include",
-body: JSON.stringify({
-email,
-}),
-}
-);
+        setError(result.error.message);
+        toast.error("Logged In Failed");
+        return;
+        }
+        
+        await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/jwt`,
+        {
+        method: "POST",
+        headers: {
+        "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+        email,
+        }),
+        }
+        );
 
 toast.success("Logged In Successful");
 

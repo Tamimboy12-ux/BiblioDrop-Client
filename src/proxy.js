@@ -1,23 +1,20 @@
 import { NextResponse } from "next/server";
 
 export function proxy(request) {
-
   const sessionToken =
     request.cookies.get("better-auth.session_token")?.value ||
     request.cookies.get("better-auth.session-token")?.value;
 
   const jwtToken = request.cookies.get("token")?.value;
 
-  const { pathname } = request.nextUrl;
+  const isAuthenticated = sessionToken || jwtToken;
+  console.log(jwtToken,)
 
   if (
-    pathname.startsWith("/dashboard") &&
-    !sessionToken &&
-    !jwtToken
+    request.nextUrl.pathname.startsWith("/dashboard") &&
+    !isAuthenticated
   ) {
-    return NextResponse.redirect(
-      new URL("/login", request.url)
-    );
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
@@ -25,6 +22,8 @@ export function proxy(request) {
 
 export const config = {
   matcher: [
-    "/dashboard/:+",
-  ],
+    "/dashboard/user/:path*",
+    "/dashboard/admin/:path*",
+    "/dashboard/librarian/:path*",
+],
 };
