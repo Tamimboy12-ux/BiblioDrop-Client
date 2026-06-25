@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
         return;
       }
 
-      if (session.user.role !== "admin") {
+      if (session?.user?.role !== "admin") {
         router.replace("/");
       }
     }

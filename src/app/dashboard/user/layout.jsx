@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         return;
       }
 
-      if (session.user.role !== "user") {
+      if (session?.user?.role !== "user") {
         router.replace("/");
       }
 
