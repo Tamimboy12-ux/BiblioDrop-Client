@@ -197,7 +197,7 @@ const InventoryPage = () => {
                     </td>
 
                     <td className="px-6 py-5 font-medium text-indigo-600">
-                      ৳ {book.deliveryFee}
+                      $ {book.deliveryFee}
                     </td>
 
                     <td className="px-6 py-5">
