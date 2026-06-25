@@ -5,14 +5,12 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 
 import LibrarianSidebar from "@/components/dashboard/LibrarianSidebar";
+import { Spinner } from "@heroui/react";
 
 const Layout = ({ children }) => {
   const router = useRouter();
 
-  const {
-    data: session,
-    isPending,
-  } = useSession();
+  const {  data: session,  isPending,} = useSession();
 
   useEffect(() => {
     if (!isPending) {
@@ -29,8 +27,9 @@ const Layout = ({ children }) => {
 
   if (isPending) {
     return (
-      <div className="p-10">
-        Loading...
+       <div className="flex flex-col items-center gap-2">
+        <Spinner color="success" />
+        <span className="text-xs text-muted">Success</span>
       </div>
     );
   }

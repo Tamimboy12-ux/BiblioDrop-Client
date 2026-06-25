@@ -6,8 +6,7 @@ export function proxy(request) {
     request.cookies.get("better-auth.session_token")?.value ||
     request.cookies.get("better-auth.session-token")?.value;
 
-  const jwtToken =
-    request.cookies.get("token")?.value;
+  const jwtToken = request.cookies.get("token")?.value;
 
   const { pathname } = request.nextUrl;
 
@@ -26,6 +25,6 @@ export function proxy(request) {
 
 export const config = {
   matcher: [
-    "/dashboard/:path*",
+    "/dashboard/:+",
   ],
 };
