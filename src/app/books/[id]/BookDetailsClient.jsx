@@ -12,6 +12,7 @@ import { addReview, getBookReviews, canReviewBook, } from "@/services/reviewApi"
 import {useSession,} from "@/lib/auth-client";
 
 import ReviewModal from "@/components/modal/ReviewModal";
+import toast from "react-hot-toast";
 
 
 
@@ -163,9 +164,7 @@ async (comment) => {
 
   loadReviews();
 
-  alert(
-    "Review Added"
-  );
+  toast.success("Review Added successful");
 };
 
 
