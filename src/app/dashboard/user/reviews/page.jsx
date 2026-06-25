@@ -14,6 +14,7 @@ import {
   updateReview,
   removeReview,
 } from "@/services/reviewApi";
+import toast from "react-hot-toast";
 
 const MyReviewsPage =
   () => {
@@ -64,35 +65,20 @@ const MyReviewsPage =
 
 
 
-    const handleDelete =
-      async (id) => {
+    const handleDelete = async (id) => {
 
-        const confirmDelete =
-          confirm(
-            "Delete Review?"
-          );
-
-        if (
-          !confirmDelete
-        ) return;
-
-        await removeReview(
-          id
-        );
+        await removeReview(id);
 
         loadReviews();
 
+        toast.success("Reviews Deleted Success")
       };
 
 
 
-    const handleEdit =
-      async () => {
+    const handleEdit = async () => {
 
-        await updateReview(
-          editingId,
-          comment
-        );
+        await updateReview( editingId, comment);
 
         setEditingId(
           null
@@ -102,6 +88,7 @@ const MyReviewsPage =
 
         loadReviews();
 
+        toast.success("Review Updated Successful")
       };
 
 

@@ -120,6 +120,7 @@ const BooksPage = () => {
             h-64
             object-cover
             "
+            priority
           />
 
           <div className="p-5">
@@ -128,11 +129,11 @@ const BooksPage = () => {
               {book.title}
             </h2>
 
-            <p className="text-gray-500">
+            <p className="text-gray-500 font-semibold">
               {book.author}
             </p>
 
-            <p className="mt-2">
+            <p className="mt-2 text-xl font-bold">
               ${book.deliveryFee}
             </p>
 

@@ -1,55 +1,35 @@
 "use client";
 
-import {
-useEffect,
-useState,
-} from "react";
+import { useEffect, useState, } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
 
-import {
-createDelivery,
-} from "@/services/deliveryApi";
+import {createDelivery,} from "@/services/deliveryApi";
 
-import {
-addReview,
-getBookReviews,
-canReviewBook,
-} from "@/services/reviewApi";
+import { addReview, getBookReviews, canReviewBook, } from "@/services/reviewApi";
 
-import {
-useSession,
-} from "@/lib/auth-client";
+import {useSession,} from "@/lib/auth-client";
 
 import ReviewModal from "@/components/modal/ReviewModal";
 
-const BookDetailsClient = ({
-book,
-}) => {
 
-const {
-data: session,
-} = useSession();
 
-const [reviews, setReviews] =
-useState([]);
 
-const [reviewOpen,
-setReviewOpen] =
-useState(false);
+const BookDetailsClient = ({book,}) => {
 
-const [canReview,
-setCanReview] =
-useState(false);
+const {data: session, isPending} = useSession();
 
-const loadReviews =
-async () => {
+const [reviews, setReviews] = useState([]);
+
+const [reviewOpen, setReviewOpen] = useState(false);
+
+const [canReview, setCanReview] = useState(false);
+
+const loadReviews = async () => {
 
   try {
-
-    const data =
-      await getBookReviews(
+    const data = await getBookReviews(
         book._id
       );
 
@@ -60,9 +40,7 @@ async () => {
     );
 
   } catch {
-
     setReviews([]);
-
   }
 };
 
@@ -107,16 +85,11 @@ const checkReviewPermission =
 
 checkReviewPermission();
 
-}, [
-session,
-book?._id,
-]);
+}, [ session, book?._id, ]);
 
-const handleRequest =
-async () => {
+const handleRequest = async () => {
 
-  if (!session?.user) {
-
+  if (session?.user?.role !== "user") {
     alert(
       "Please login first"
     );
@@ -195,8 +168,16 @@ async (comment) => {
   );
 };
 
+
+if (isPending) {
+  <div className="py-10 text-center">
+      Loading...
+  </div>
+}
+
 return (
-<> <div
+  <> 
+  <div
      className="
      max-w-5xl
      mx-auto
@@ -216,18 +197,27 @@ return (
       rounded-3xl
       h-120
       "
+      priority
     />
 
     <div>
 
       <h1
         className="
-        text-5xl
+        text-3xl
         font-bold
         "
       >
         {book.title}
       </h1>
+
+      <p className="mt-2 text-gray-500 font-semibold">
+                {book.author}
+              </p>
+
+              <p className="mt-2 text-xl font-bold">
+                ${book.deliveryFee}
+              </p>
 
       <p
         className="
@@ -248,23 +238,7 @@ return (
       >
 
         {
-          session?.user ? (
-
-            <Link
-              href={`/books/${book._id}/checkout`}
-              className="
-              bg-indigo-600
-              text-white
-              px-6
-              py-3
-              rounded-xl
-              "
-            >
-              Proceed To Payment
-            </Link>
-
-          ) : (
-
+          !session ? (
             <Link
               href="/login"
               className="
@@ -277,12 +251,24 @@ return (
             >
               Login To Proceed Payment
             </Link>
-
-          )
+          ) : session.user.role === "user" ? (
+            <Link
+              href={`/books/${book._id}/checkout`}
+              className="
+              bg-indigo-600
+              text-white
+              px-6
+              py-3
+              rounded-xl
+              "
+            >
+              Proceed To Payment
+            </Link>
+          ) : null
         }
 
         {
-          session?.user && (
+          session?.user?.role === "user" && (
 
             canReview ? (
 
@@ -313,8 +299,7 @@ return (
                 text-red-500
                 "
               >
-                Review available
-                after delivery
+                Review available after delivery
               </div>
 
             )
@@ -334,7 +319,7 @@ return (
 
       <h2
         className="
-        text-3xl
+        text-2xl
         font-bold
         "
       >
@@ -367,7 +352,6 @@ return (
             {
               reviews.map(
                 (review) => (
-
                   <div
                     key={
                       review._id
@@ -435,7 +419,6 @@ return (
   }
 
 </>
-
 );
 };
 

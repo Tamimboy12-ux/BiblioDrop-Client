@@ -10,6 +10,7 @@ import {
 } from "@/services/booksApi";
 
 import { useSession } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const InventoryPage = () => {
   const router = useRouter();
@@ -38,15 +39,11 @@ const InventoryPage = () => {
   }, [session]);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this book?"
-    );
-
-    if (!confirmDelete) return;
 
     await deleteBook(id);
 
     loadBooks();
+    toast.success("Delete Successful")
   };
 
   const handleUnpublish = async (id) => {
@@ -56,6 +53,7 @@ const InventoryPage = () => {
     );
 
     loadBooks();
+    toast.success("Book Unpublished Successful")
   };
 
   return (

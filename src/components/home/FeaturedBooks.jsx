@@ -42,6 +42,7 @@ const FeaturedBooks = () => {
               width={600}
               height={400}
               className="w-full h-64 object-cover"
+              priority
             />
 
             <div className="p-5">
@@ -50,12 +51,12 @@ const FeaturedBooks = () => {
                 {book.title}
               </h3>
 
-              <p className="text-gray-500">
+              <p className="text-gray-500 font-semibold">
                 {book.author}
               </p>
 
-              <p className="mt-2">
-                ৳{book.deliveryFee}
+              <p className="mt-2 text-xl font-bold">
+                ${book.deliveryFee}
               </p>
 
               <Link

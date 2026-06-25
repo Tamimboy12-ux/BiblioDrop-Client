@@ -4,6 +4,7 @@ import { useEffect, useState,}from "react";
 
 import { getAllUsers, updateUserRole, deleteUser,}from "@/services/usersApi";
 import { Avatar, Spinner } from "@heroui/react";
+import toast from "react-hot-toast";
 
 
 const AdminUsersPage = () => {
@@ -25,14 +26,14 @@ const AdminUsersPage = () => {
   const handleRoleChange = async (id, role) => {
       await updateUserRole(id, role);
       loadUsers();
+      toast.success("Role Change Successful")
     };
 
   const handleDelete = async (id) => {
-      const confirmDelete = confirm("Delete this user?")
-
-      if (!confirmDelete) return;
+      
       await deleteUser(id);
       loadUsers();
+      toast.success("Delete User Successful")
     };
 
 
@@ -139,6 +140,18 @@ const AdminUsersPage = () => {
                           className=" px-3 py-2 rounded-xl bg-blue-600 text-white "
                         >
                           Librarian
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleRoleChange(
+                              user._id,
+                              "user"
+                            )
+                          }
+                          className=" px-3 py-2 rounded-xl bg-green-600 text-white "
+                        >
+                          User
                         </button>
 
                         <button
